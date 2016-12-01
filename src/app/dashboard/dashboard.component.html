@@ -1,0 +1,32 @@
+<md-grid-list cols="2" gutterSize="5px" rowHeight="fit">
+    <md-grid-tile>
+        <md-card>
+            <md-card-title>
+                <md-icon md-card-avatar>art_track</md-icon>
+                Tracks
+            </md-card-title>
+            <md-card-content>
+                <md-nav-list >
+                    <md-list-item *ngFor="let track of tracks; let i = index;" (click)="goTo(i)">
+                        <span>{{track.name}}</span>
+                    </md-list-item>
+                </md-nav-list>
+            </md-card-content>
+        </md-card>
+    </md-grid-tile>
+    <md-grid-tile>
+        <md-card>
+            <md-card-title>
+                <md-icon md-card-avatar>people</md-icon>
+                Students
+            </md-card-title>
+            <md-card-content>
+                <md-nav-list>
+                    <md-list-item>
+                        <a href="">JS students</a>
+                    </md-list-item>
+                </md-nav-list>
+            </md-card-content>
+        </md-card>
+    </md-grid-tile>
+</md-grid-list>

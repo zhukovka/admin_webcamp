@@ -1,0 +1,11 @@
+md-sidenav-layout{
+    height: 100vh;
+}
+md-nav-list a{
+    display: flex;
+    align-items: center;
+}
+
+[routerLinkActive].active{
+    color: var(--default-primary-color);
+}

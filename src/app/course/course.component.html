@@ -1,0 +1,74 @@
+<div class="container">
+  <md-card *ngIf="course">
+    <md-card-header layout="row" layout-align="end center">
+      <button *ngIf="!editMode" md-icon-button class="md-icon-button" (click)="editMode=true">
+        <md-icon class="primary">mode_edit</md-icon>
+      </button>
+      <button *ngIf="editMode" md-icon-button class="md-icon-button" (click)="editMode=false">
+        <md-icon>clear</md-icon>
+      </button>
+      <button *ngIf="editMode" md-icon-button class="md-icon-button">
+        <md-icon class="primary">check</md-icon>
+      </button>
+    </md-card-header>
+    <form>
+      <md-card-title>
+        <md-input #nameInput [(ngModel)]="course.name" name="name" class="md-headline"
+                  [disabled]="!editMode">
+        </md-input>
+      </md-card-title>
+      <md-grid-list cols="2" gutterSize="1rem" rowHeight="3rem">
+        <md-grid-tile>
+          <md-input placeholder="Alias" [(ngModel)]="course.alias" name="alias"
+                    [disabled]="nameInput.disabled"></md-input>
+        </md-grid-tile>
+        <md-grid-tile>
+          <md-input placeholder="Meta description" [(ngModel)]="course.metadesc" name="metadesc"
+                    [disabled]="nameInput.disabled"></md-input>
+        </md-grid-tile>
+        <md-grid-tile>
+          <md2-select [(ngModel)]="course.track" name="track" [disabled]="nameInput.disabled">
+            <md2-option *ngFor="let track of tracks" [value]="track.id">{{track.name}}</md2-option>
+          </md2-select>
+        </md-grid-tile>
+        <md-grid-tile>
+          <md-input placeholder="Duration (hours)" [(ngModel)]="course.duration" type="number" name="duration"
+                    [disabled]="nameInput.disabled"></md-input>
+          <md-input placeholder="Level (1-5)" [(ngModel)]="course.level" type="number" name="level"
+                    [disabled]="nameInput.disabled" min="1" max="5"></md-input>
+        </md-grid-tile>
+      </md-grid-list>
+      <md-list>
+        <h3 md-subheader>Results</h3>
+        <md-list-item *ngFor="let res of course.results; let i = index;" class="results-item">
+          <md-input [(ngModel)]="course.results[i]" [name]="'res'+i" [disabled]="nameInput.disabled"></md-input>
+          <md-icon *ngIf="editMode" (click)="removeResult(res)">delete
+          </md-icon>
+        </md-list-item>
+        <md-list-item *ngIf="editMode" class="add-item">
+          <button md-mini-fab (click)="addResult()">
+            <md-icon class="md-24">add</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+      <md-list>
+        <h3 md-subheader>Requirements</h3>
+        <md-list-item *ngFor="let req of course.requirements; let i = index;" class="results-item">
+          <md-input [(ngModel)]="course.requirements[i]" [name]="'req'+i" [disabled]="nameInput.disabled"></md-input>
+          <md-icon *ngIf="editMode" (click)="removeRequirement(req)">delete
+          </md-icon>
+        </md-list-item>
+        <md-list-item class="add-item" *ngIf="editMode">
+          <button md-mini-fab (click)="addRequirement()">
+            <md-icon class="md-24">add</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+    </form>
+    <md2-datepicker format="DD/MM/YYYY HH:mm" type="datetime" [(ngModel)]="date"></md2-datepicker>
+    <md-card-actions layout="row" layout-align="end center">
+
+
+    </md-card-actions>
+  </md-card>
+</div>

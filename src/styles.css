@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~normalize.css/normalize.css';
+@import "~ng2-material/ng2-material.css";
+/*@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';*/
+@import "palette.css";
+:root {
+    --unit: 1rem;
+    --full-height: 100vh;
+}
+
+.container{
+    margin: calc(2 * var(--unit));
+}
+
+.material-icons.primary{
+    color: var(--default-primary-color);
+}

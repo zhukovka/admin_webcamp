@@ -1,0 +1,9 @@
+<div [ngClass]="setClasses()">
+    <div>
+        <ng-content select="flex-table-header"></ng-content>
+    </div>
+    <div [ngClass]="setBodyClasses()">
+
+        <ng-content select="flex-table-body"></ng-content>
+    </div>
+</div>

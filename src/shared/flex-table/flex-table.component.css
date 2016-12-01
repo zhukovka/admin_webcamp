@@ -1,0 +1,52 @@
+:root {
+    --color: #BDBDBD;
+    --unit: 1rem;
+    --icon-size: 1.2rem;
+}
+
+flex-table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+flex-table-header, flex-table-row {
+}
+
+flex-table-header .flex-table-item {
+    padding: var(--unit) 0;
+    font-weight: bold;
+}
+
+.flex-table-item {
+    border-bottom: 1px solid var(--color);
+    display: flex;
+    align-items: center;
+}
+
+.flex-table-item > * {
+    flex: 1;
+}
+
+.flex-table-body__scroll, .flex-table__hidden {
+    height: 100%;
+}
+
+.flex-table-body__scroll {
+    overflow: auto;
+}
+
+.flex-table-body__scroll > flex-table-body {
+    margin-right: -15px;
+}
+
+.flex-table__hidden {
+    overflow: hidden;
+}
+
+flex-table .material-icons {
+    cursor: pointer;
+    color: var(--color);
+    font-size: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+}

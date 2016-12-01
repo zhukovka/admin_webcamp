@@ -1,0 +1,29 @@
+<md-sidenav-layout>
+    <md-sidenav #start (open)="closeStartButton.focus()" mode="side" opened>
+        <md-nav-list>
+            <md-list-item>
+                <a md-line routerLink="/dashboard" routerLinkActive="active">
+                    <md-icon>dashboard</md-icon>
+                    <span>Dashboard</span>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a md-line routerLink="/courses" routerLinkActive="active">
+                    <md-icon>class</md-icon>
+                    <span>Courses</span>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a md-line routerLink="/students" routerLinkActive="active">
+                    <md-icon>people</md-icon>
+                    <span>
+                        Students
+                    </span>
+                </a>
+            </md-list-item>
+        </md-nav-list>
+    </md-sidenav>
+    <router-outlet></router-outlet>
+    <!-- Routed views go here -->
+</md-sidenav-layout>
+

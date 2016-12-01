@@ -1,0 +1,5 @@
+.flex-item{
+  display: flex;
+  flex: 4 auto;
+  align-items: center;
+}
