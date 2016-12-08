@@ -4,72 +4,89 @@ import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {Observable} from "rxjs/Rx";
 import {CourseSummary, ICourseSummary} from "./models/CourseSummary";
+import {Schedule} from "./models/Schedule";
 const HOST = '//localhost/api.webcamp';
 const TRACKS_URL = `${HOST}/tracks`;
 const COURSE_SUMMARY_URL = `${HOST}/full/courses`;
 const COURSE_URL = `${HOST}/courses`;
+const SCHEDULE_URL = `${HOST}/schedule`;
+const COURSE_UPDATE_URL = `${HOST}/update/courses`;
 @Injectable()
 export class CourseService {
-    private courses:Course[];
-    private courseSummaryList:CourseSummary[];
+  private courses:Course[];
+  private courseSummaryList:CourseSummary[];
 
-    constructor(private http:Http) {
-    }
+  constructor(private http:Http) {
+  }
 
-    getCourse(id:number):Promise<Course>{
-      return this.http.get(COURSE_URL+`/${id}`).map(r=>{
-        return Course.fromJSON(r.json());
-      }).toPromise();
-    }
+  getCourse(id:number):Promise<Course> {
+    return this.http.get(COURSE_URL + `/${id}`).map(r=> {
+      return Course.fromJSON(r.json());
+    }).toPromise();
+  }
 
-    getCourses():Promise<Course[]> {
-        return this.coursesStore().toPromise();
-    }
+  getSchedules(id:number):Promise<Schedule[]> {
+    return this.http.get(SCHEDULE_URL + `/${id}`).map(r=> {
+      return r.json().map((el:any)=>Schedule.fromJSON(el));
+    }).toPromise();
+  }
 
-    coursesStore():Observable<Course[]> {
-        if (this.courses) {
-            return Observable.of(this.courses);
-        } else {
-            return this.http.get(COURSE_URL).map(r=> {
-                this.courses = r.json().map((el:ICourse)=>Course.fromJSON(el));
-                return this.courses;
-            });
-        }
-    }
+  getCourses():Promise<Course[]> {
+    return this.coursesStore().toPromise();
+  }
 
-    getCoursesLimit(limit:number):Observable<Course[]> {
-        return this.coursesStore().map(courses=> {
-            return courses.slice(0, limit);
-        });
+  coursesStore():Observable<Course[]> {
+    if (this.courses) {
+      return Observable.of(this.courses);
+    } else {
+      return this.http.get(COURSE_URL).map(r=> {
+        this.courses = r.json().map((el:ICourse)=>Course.fromJSON(el));
+        return this.courses;
+      });
     }
+  }
 
-    getTracks():Promise<Track[]> {
-        return this.http.get(TRACKS_URL).map(r=>r.json()as Track[]).toPromise();
-    }
+  getCoursesLimit(limit:number):Observable<Course[]> {
+    return this.coursesStore().map(courses=> {
+      return courses.slice(0, limit);
+    });
+  }
 
-    getCourseSummaryList(nocache=false):Promise<CourseSummary[]> {
-        if (!this.courseSummaryList || nocache) {
-            return this.fetchCourseSummary();
-        }
-        return Promise.resolve(this.courseSummaryList);
-    }
+  getTracks():Promise<Track[]> {
+    return this.http.get(TRACKS_URL).map(r=>r.json()as Track[]).toPromise();
+  }
 
-    private fetchCourseSummary():Promise<CourseSummary[]> {
-        return this.http.get(COURSE_SUMMARY_URL).map(r => {
-            this.courseSummaryList = r.json()as CourseSummary[];
-            return this.courseSummaryList;
-        }).toPromise();
+  getCourseSummaryList(nocache = false):Promise<CourseSummary[]> {
+    if (!this.courseSummaryList || nocache) {
+      return this.fetchCourseSummary();
     }
+    return Promise.resolve(this.courseSummaryList);
+  }
 
-    findCourseSummary(courseId:number):Promise<CourseSummary> {
-        return this.getCourseSummaryList().then(list=> {
-            return list.find((el:CourseSummary)=>el.course_id == courseId);
-        });
-    }
+  private fetchCourseSummary():Promise<CourseSummary[]> {
+    return this.http.get(COURSE_SUMMARY_URL).map(r => {
+      this.courseSummaryList = r.json()as CourseSummary[];
+      return this.courseSummaryList;
+    }).toPromise();
+  }
 
-    updateCourseSummary(courseSummary:CourseSummary):Promise<Response> {
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-        return this.http.post(COURSE_SUMMARY_URL, courseSummary, options).toPromise();
-    }
+  findCourseSummary(courseId:number):Promise<CourseSummary> {
+    return this.getCourseSummaryList().then(list=> {
+      return list.find((el:CourseSummary)=>el.course_id == courseId);
+    });
+  }
+
+  updateCourseSummary(courseSummary:CourseSummary):Promise<Response> {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(COURSE_SUMMARY_URL, courseSummary, options).toPromise();
+  }
+
+  updateCourse(course:Course):Promise<Course> {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(COURSE_UPDATE_URL, course, options).toPromise().then(r=>{
+      return this.getCourse(course.id);
+    });
+  }
 }

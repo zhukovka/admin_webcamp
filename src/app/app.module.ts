@@ -16,6 +16,8 @@ import {Ng2MaterialModule} from 'ng2-material';
 import {SharedModule} from "../shared/shared.module";
 import {CourseEditComponent} from './course-edit/course-edit.component';
 import {Md2Module} from "md2/index";
+import {CodemirrorModule} from 'ng2-codemirror';
+import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,8 @@ import {Md2Module} from "md2/index";
     StudentComponent,
     StudentListComponent,
     DashboardComponent,
-    CourseEditComponent
+    CourseEditComponent,
+    CourseScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import {Md2Module} from "md2/index";
     Md2Module.forRoot(),
     MaterialModule.forRoot(),
     Ng2MaterialModule.forRoot(),
-    SharedModule.forRoot()
+    SharedModule.forRoot(),
+    CodemirrorModule
   ],
   providers: [CourseService],
   bootstrap: [AppComponent],

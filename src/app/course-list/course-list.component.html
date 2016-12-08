@@ -14,7 +14,7 @@
                                     <div [style.flex]="2">
                                       Name
                                     </div>
-                                    <div>
+                                    <div [style.flex]="1">
                                       Course id
                                     </div>
                                     <div [style.flex]="2">
@@ -36,7 +36,7 @@
                                                     [disabled]="!editMode(course)">
                                           </md-input>
                                         </div>
-                                        <div>
+                                        <div [style.flex]="1">
                                           {{course.course_id}}
                                         </div>
                                         <div [style.flex]="2">

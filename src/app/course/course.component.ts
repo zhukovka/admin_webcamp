@@ -3,6 +3,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import {CourseService} from "../course.service";
 import {Course, Track} from "../models/Course";
+import {Schedule} from "../models/Schedule";
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
@@ -13,7 +14,12 @@ export class CourseComponent implements OnInit {
   private tracks:Track[];
   private editMode:boolean;
   private date = new Date();
-
+  private config = {
+    lineNumbers: true,
+    mode: {
+      name: 'html'
+    }
+  };
   constructor(private route:ActivatedRoute,
               private router:Router,
               private service:CourseService) {
@@ -23,10 +29,13 @@ export class CourseComponent implements OnInit {
     this.route.params
     // (+) converts string 'id' to a number
       .switchMap((params:Params) => this.service.getCourse(+params['id']))
-      .subscribe((course:Course) => this.course = course);
+      .subscribe((course:Course) => {
+        return this.course = course;
+      });
     this.service.getTracks().then(t=> {
       this.tracks = t;
     })
+
   }
 
   addResult() {
@@ -45,4 +54,21 @@ export class CourseComponent implements OnInit {
     this.course.removeRequirement(req);
   }
 
+  startEdit() {
+    this.editMode = true;
+  }
+
+  discard() {
+    this.editMode = false;
+    this.service.getCourse(this.course.id).then(course=>this.course = course);
+  }
+
+  onSubmit() {
+    console.log(this.course);
+    this.editMode = false;
+    this.service.updateCourse(this.course).then(c=>this.course = c);
+  }
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
 }
