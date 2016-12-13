@@ -89,4 +89,12 @@ export class CourseService {
       return this.getCourse(course.id);
     });
   }
+
+  postSchedule(schedule:Schedule):Promise<boolean> {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    schedule.normalizeStart();
+    console.log(schedule);
+    return this.http.post(SCHEDULE_URL+`/${schedule.course_id}`, schedule, options).toPromise().then(r=>true);
+  }
 }

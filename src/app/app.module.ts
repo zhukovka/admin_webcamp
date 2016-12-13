@@ -18,6 +18,7 @@ import {CourseEditComponent} from './course-edit/course-edit.component';
 import {Md2Module} from "md2/index";
 import {CodemirrorModule} from 'ng2-codemirror';
 import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
+import { SchedulesListComponent } from './schedules-list/schedules-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { CourseScheduleComponent } from './course-schedule/course-schedule.compo
     StudentListComponent,
     DashboardComponent,
     CourseEditComponent,
-    CourseScheduleComponent
+    CourseScheduleComponent,
+    SchedulesListComponent
   ],
   imports: [
     BrowserModule,

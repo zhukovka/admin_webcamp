@@ -20,6 +20,7 @@ export class CourseComponent implements OnInit {
       name: 'html'
     }
   };
+  private newSchedule:boolean;
   constructor(private route:ActivatedRoute,
               private router:Router,
               private service:CourseService) {
@@ -70,5 +71,9 @@ export class CourseComponent implements OnInit {
   }
   trackByIndex(index: number, obj: any): any {
     return index;
+  }
+
+  onNewSchedule(add:boolean){
+    this.newSchedule = add;
   }
 }

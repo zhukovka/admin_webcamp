@@ -1,126 +1,126 @@
 <div class="container">
-    <md-card>
-        <md-card-header>
-            <md-input placeholder="search" #search (keyup)="onSearch(search.value)" [value]="query"></md-input>
-        </md-card-header>
-        <md-card-content>
-            <div *ngIf="!search.value">
-                <md-tab-group [selectedIndex]="selectedTrackIndex">
-                    <md-tab *ngFor="let track of tracks" [label]="track.name">
-                        <div [style.height]="'500px'">
-                            <flex-table>
-                                <flex-table-header fixed>
-                                  <div class="flex-item">
-                                    <div [style.flex]="2">
-                                      Name
-                                    </div>
-                                    <div [style.flex]="1">
-                                      Course id
-                                    </div>
-                                    <div [style.flex]="2">
-                                      Price
-                                    </div>
-                                    <div [style.flex]="1">
-                                      Modifier
-                                    </div>
-                                  </div>
-                                    <div>
-                                        Edit
-                                    </div>
-                                </flex-table-header>
-                                <flex-table-body>
-                                    <flex-table-row *ngFor="let course of trackFilter(track.id)">
-                                      <div class="flex-item" (click)="goToCourse($event,course.course_id)">
-                                        <div [style.flex]="2">
-                                          <md-input #nameInput [(ngModel)]="course.name" name="name"
-                                                    [disabled]="!editMode(course)">
-                                          </md-input>
-                                        </div>
-                                        <div [style.flex]="1">
-                                          {{course.course_id}}
-                                        </div>
-                                        <div [style.flex]="2">
-                                          <md-input #priceInput type="number" [(ngModel)]="course.price" name="price"
-                                                    [disabled]="!editMode(course)">
-                                          </md-input>
-                                        </div>
-                                        <div [style.flex]="1">
-                                          {{course.modifier}}
-                                        </div>
-                                      </div>
-                                        <div>
-                                            <md-icon *ngIf="nameInput.disabled" class="primary"
-                                                     (click)="editCourse(course)">mode_edit
-                                            </md-icon>
-                                            <md-icon *ngIf="!nameInput.disabled" (click)="undoEdits()">clear</md-icon>
-                                            <md-icon *ngIf="!nameInput.disabled" class="primary"
-                                                     (click)="confirmEdits()">check
-                                            </md-icon>
-                                        </div>
-                                    </flex-table-row>
-                                </flex-table-body>
-                            </flex-table>
-                        </div>
-                    </md-tab>
-                </md-tab-group>
+  <md-card>
+    <md-card-header>
+      <md-input placeholder="search" #search (keyup)="onSearch(search.value)" [value]="query"></md-input>
+    </md-card-header>
+    <md-card-content>
+      <div *ngIf="!search.value">
+        <md-tab-group [selectedIndex]="selectedTrackIndex">
+          <md-tab *ngFor="let track of tracks" [label]="track.name">
+            <div [style.height]="'500px'">
+              <flex-table>
+                <flex-table-header fixed>
+                  <div class="flex-item">
+                    <div [style.flex]="2">
+                      Name
+                    </div>
+                    <div [style.flex]="1">
+                      Course id
+                    </div>
+                    <div [style.flex]="2">
+                      Price
+                    </div>
+                    <div [style.flex]="1">
+                      Modifier
+                    </div>
+                  </div>
+                  <div>
+                    Edit
+                  </div>
+                </flex-table-header>
+                <flex-table-body>
+                  <flex-table-row *ngFor="let course of trackFilter(track.id)">
+                    <div class="flex-item" (click)="goToCourse($event,course.course_id)">
+                      <div [style.flex]="2">
+                        <md-input #nameInput [(ngModel)]="course.name" name="name"
+                                  [disabled]="!editMode(course)">
+                        </md-input>
+                      </div>
+                      <div [style.flex]="1">
+                        {{course.course_id}}
+                      </div>
+                      <div [style.flex]="2">
+                        <md-input #priceInput type="number" [(ngModel)]="course.price" name="price"
+                                  [disabled]="!editMode(course)">
+                        </md-input>
+                      </div>
+                      <div [style.flex]="1">
+                        {{course.modifier}}
+                      </div>
+                    </div>
+                    <div>
+                      <md-icon *ngIf="nameInput.disabled" class="primary"
+                               (click)="editCourse(course)">mode_edit
+                      </md-icon>
+                      <md-icon *ngIf="!nameInput.disabled" (click)="undoEdits()">clear</md-icon>
+                      <md-icon *ngIf="!nameInput.disabled" class="primary"
+                               (click)="confirmEdits()">check
+                      </md-icon>
+                    </div>
+                  </flex-table-row>
+                </flex-table-body>
+              </flex-table>
             </div>
-            <div *ngIf="search.value">
-                <md-tab-group>
-                    <md-tab label="Search">
-                        <div [style.height]="'500px'">
-                            <flex-table>
-                                <flex-table-header fixed>
-                                    <div [style.flex]="2">
-                                        Name
-                                    </div>
-                                    <div>
-                                        Course id
-                                    </div>
-                                    <div [style.flex]="2">
-                                        Price
-                                    </div>
-                                    <div>
-                                        Modifier
-                                    </div>
-                                    <div>
-                                        Edit
-                                    </div>
-                                </flex-table-header>
-                                <flex-table-body>
-                                    <flex-table-row *ngFor="let course of filteredSummaryList">
-                                        <div [style.flex]="2">
-                                            <md-input #nameInput [(ngModel)]="course.name" name="name"
-                                                      [disabled]="!editMode(course)">
-                                            </md-input>
-                                        </div>
-                                        <div>
-                                            {{course.course_id}}
-                                        </div>
-                                        <div [style.flex]="2">
-                                            <md-input #priceInput type="number" [(ngModel)]="course.price" name="price"
-                                                      [disabled]="!editMode(course)">
-                                            </md-input>
-                                        </div>
-                                        <div>
-                                            {{course.modifier}}
-                                        </div>
-                                        <div>
-                                            <md-icon *ngIf="nameInput.disabled" class="primary"
-                                                     (click)="editCourse(course)">mode_edit
-                                            </md-icon>
-                                            <md-icon *ngIf="!nameInput.disabled" (click)="undoEdits()">clear</md-icon>
-                                            <md-icon *ngIf="!nameInput.disabled" class="primary"
-                                                     (click)="confirmEdits()">check
-                                            </md-icon>
-                                        </div>
-                                    </flex-table-row>
-                                </flex-table-body>
-                            </flex-table>
-                        </div>
-                    </md-tab>
-                </md-tab-group>
+          </md-tab>
+        </md-tab-group>
+      </div>
+      <div *ngIf="search.value">
+        <md-tab-group>
+          <md-tab label="Search">
+            <div [style.height]="'500px'">
+              <flex-table>
+                <flex-table-header fixed>
+                  <div [style.flex]="2">
+                    Name
+                  </div>
+                  <div>
+                    Course id
+                  </div>
+                  <div [style.flex]="2">
+                    Price
+                  </div>
+                  <div>
+                    Modifier
+                  </div>
+                  <div>
+                    Edit
+                  </div>
+                </flex-table-header>
+                <flex-table-body>
+                  <flex-table-row *ngFor="let course of filteredSummaryList">
+                    <div [style.flex]="2">
+                      <md-input #nameInput [(ngModel)]="course.name" name="name"
+                                [disabled]="!editMode(course)">
+                      </md-input>
+                    </div>
+                    <div>
+                      {{course.course_id}}
+                    </div>
+                    <div [style.flex]="2">
+                      <md-input #priceInput type="number" [(ngModel)]="course.price" name="price"
+                                [disabled]="!editMode(course)">
+                      </md-input>
+                    </div>
+                    <div>
+                      {{course.modifier}}
+                    </div>
+                    <div>
+                      <md-icon *ngIf="nameInput.disabled" class="primary"
+                               (click)="editCourse(course)">mode_edit
+                      </md-icon>
+                      <md-icon *ngIf="!nameInput.disabled" (click)="undoEdits()">clear</md-icon>
+                      <md-icon *ngIf="!nameInput.disabled" class="primary"
+                               (click)="confirmEdits()">check
+                      </md-icon>
+                    </div>
+                  </flex-table-row>
+                </flex-table-body>
+              </flex-table>
+            </div>
+          </md-tab>
+        </md-tab-group>
 
-            </div>
-        </md-card-content>
-    </md-card>
+      </div>
+    </md-card-content>
+  </md-card>
 </div>

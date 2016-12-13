@@ -1,5 +1,5 @@
 <div class="container">
-  <md-card *ngIf="course">
+  <md-card *ngIf="course" class="mb-20">
     <form (ngSubmit)="onSubmit()" #courseForm="ngForm">
       <md-card-header layout="row" layout-align="end center">
         <button *ngIf="!editMode" type="button" md-icon-button class="md-icon-button" (click)="startEdit()">
@@ -64,8 +64,14 @@
           </button>
         </md-list-item>
       </md-list>
-      <codemirror [(ngModel)]="course.description" [config]="config" name="description" [disabled]="nameInput.disabled"></codemirror>
+      <codemirror [(ngModel)]="course.description" [config]="config" name="description"
+                  [disabled]="nameInput.disabled"></codemirror>
     </form>
   </md-card>
-  <app-course-schedule *ngIf="course" [courseId]="course.id"></app-course-schedule>
+  <app-schedules-list *ngIf="course" [courseId]="course.id"
+                      (onAddSchedule)="onNewSchedule($event)"></app-schedules-list>
+
+  <app-course-schedule *ngIf="newSchedule && course" [editMode]="newSchedule" (onAddSchedule)="onNewSchedule($event)"
+                       [courseId]="course.id"></app-course-schedule>
+
 </div>
