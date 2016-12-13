@@ -1,0 +1,29 @@
+<md-card class="mb-20">
+  <form (ngSubmit)="onSubmit()" #scheduleForm="ngForm">
+    <md-card-header layout="row" layout-align="end center">
+      <button *ngIf="!editMode" type="button" md-icon-button class="md-icon-button" (click)="startEdit()">
+        <md-icon class="primary">mode_edit</md-icon>
+      </button>
+      <button *ngIf="editMode" type="button" md-icon-button class="md-icon-button" (click)="discard()">
+        <md-icon>clear</md-icon>
+      </button>
+      <button *ngIf="editMode" type="submit" md-icon-button class="md-icon-button">
+        <md-icon class="primary">check</md-icon>
+      </button>
+    </md-card-header>
+    <md-card-title>
+      Add course Schedule
+    </md-card-title>
+    <md-grid-list cols="2" gutterSize="1rem" rowHeight="3rem">
+      <md-grid-tile style="overflow: visible">
+        <md2-datepicker format="DD-MM-YYYY HH:mm" type="datetime" [(ngModel)]="schedule.start"
+                        (change)="schedule.setModifierByStartDate()" name="start" [disabled]="!editMode"></md2-datepicker>
+      </md-grid-tile>
+      <md-grid-tile style="overflow: visible">
+        <md2-select [(ngModel)]="schedule.modifier" name="modifier" [disabled]="!editMode">
+          <md2-option *ngFor="let modifier of modifiers" [value]="modifier">{{modifiersNames[modifier]}}</md2-option>
+        </md2-select>
+      </md-grid-tile>
+    </md-grid-list>
+  </form>
+</md-card>
