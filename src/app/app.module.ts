@@ -19,6 +19,9 @@ import {Md2Module} from "md2/index";
 import {CodemirrorModule} from 'ng2-codemirror';
 import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
 import { SchedulesListComponent } from './schedules-list/schedules-list.component';
+import { CourseInfoComponent } from './course-info/course-info.component';
+import 'hammerjs';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +32,8 @@ import { SchedulesListComponent } from './schedules-list/schedules-list.componen
     DashboardComponent,
     CourseEditComponent,
     CourseScheduleComponent,
-    SchedulesListComponent
+    SchedulesListComponent,
+    CourseInfoComponent
   ],
   imports: [
     BrowserModule,

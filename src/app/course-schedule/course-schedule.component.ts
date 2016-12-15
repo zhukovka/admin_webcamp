@@ -14,6 +14,7 @@ export class CourseScheduleComponent implements OnInit {
   private schedule:Schedule = new Schedule();
   private modifiers:number[] = [Schedule.Modifiers.Default, Schedule.Modifiers.Morning, Schedule.Modifiers.Weekend, Schedule.Modifiers.Individual];
   private modifiersNames = Schedule.ModifiersNames;
+  private showCourseInfo = false;
 
   constructor(private courseService:CourseService) {
   }

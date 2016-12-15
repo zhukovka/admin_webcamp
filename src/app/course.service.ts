@@ -5,12 +5,15 @@ import 'rxjs/add/operator/toPromise';
 import {Observable} from "rxjs/Rx";
 import {CourseSummary, ICourseSummary} from "./models/CourseSummary";
 import {Schedule} from "./models/Schedule";
+import {CourseInfo} from "./models/CourseInfo";
 const HOST = '//localhost/api.webcamp';
 const TRACKS_URL = `${HOST}/tracks`;
 const COURSE_SUMMARY_URL = `${HOST}/full/courses`;
 const COURSE_URL = `${HOST}/courses`;
 const SCHEDULE_URL = `${HOST}/schedule`;
+const SCHEDULE_UPDATE_URL = `${HOST}/update/schedule`;
 const COURSE_UPDATE_URL = `${HOST}/update/courses`;
+const COURSEINFO_URL = `${HOST}/courseinfo`;
 @Injectable()
 export class CourseService {
   private courses:Course[];
@@ -25,9 +28,15 @@ export class CourseService {
     }).toPromise();
   }
 
-  getSchedules(id:number):Promise<Schedule[]> {
+  getSchedulesByCourseId(id:number):Promise<Schedule[]> {
     return this.http.get(SCHEDULE_URL + `/${id}`).map(r=> {
       return r.json().map((el:any)=>Schedule.fromJSON(el));
+    }).toPromise();
+  }
+
+  getSchedule(sid:number):Promise<Schedule> {
+    return this.http.get(SCHEDULE_URL + `/id/${sid}`).map(r=> {
+      return Schedule.fromJSON(r.json());
     }).toPromise();
   }
 
@@ -85,7 +94,7 @@ export class CourseService {
   updateCourse(course:Course):Promise<Course> {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this.http.post(COURSE_UPDATE_URL, course, options).toPromise().then(r=>{
+    return this.http.post(COURSE_UPDATE_URL, course, options).toPromise().then(r=> {
       return this.getCourse(course.id);
     });
   }
@@ -95,6 +104,20 @@ export class CourseService {
     let options = new RequestOptions({headers: headers});
     schedule.normalizeStart();
     console.log(schedule);
-    return this.http.post(SCHEDULE_URL+`/${schedule.course_id}`, schedule, options).toPromise().then(r=>true);
+    return this.http.post(SCHEDULE_URL + `/${schedule.course_id}`, schedule, options).toPromise().then(r=>true);
+  }
+
+  updateSchedule(schedule:Schedule):Promise<boolean> {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    schedule.normalizeStart();
+    console.log(schedule);
+    return this.http.post(SCHEDULE_UPDATE_URL + `/${schedule.id}`, schedule, options).toPromise().then(r=>true);
+  }
+
+  getCourseInfoByCidMid(cid:number, mid:number):Promise<CourseInfo>{
+    return this.http.get(COURSEINFO_URL+`/${cid}/${mid}`).map(r => {
+      return CourseInfo.fromJSON(r.json());
+    }).toPromise();
   }
 }

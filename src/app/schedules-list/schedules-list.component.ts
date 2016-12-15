@@ -14,9 +14,10 @@ export class SchedulesListComponent implements OnInit {
   private modifiers:number[] = [Schedule.Modifiers.Default, Schedule.Modifiers.Morning, Schedule.Modifiers.Weekend, Schedule.Modifiers.Individual];
   private modifiersNames = Schedule.ModifiersNames;
   private schedule:Schedule;
+  private _schedule:Schedule;
 
   getSchedules(courseId:number):Promise<Schedule[]> {
-    return this.courseService.getSchedules(courseId).then(schedules=>this.schedules = schedules);
+    return this.courseService.getSchedulesByCourseId(courseId).then(schedules=>this.schedules = schedules);
   }
 
   constructor(private courseService:CourseService) {
@@ -32,14 +33,20 @@ export class SchedulesListComponent implements OnInit {
 
   editSchedule(schedule:Schedule) {
     this.schedule = schedule;
+    this._schedule = Object.assign({}, schedule);
   }
 
   undoEdits() {
-    this.schedule = null;
+    this.getSchedules(this.courseId).then(()=> {
+      this.schedule = null;
+    });
   }
 
   confirmEdits() {
-    console.log(this.schedule);
+    this.courseService.updateSchedule(this.schedule).then(()=> {
+      this.getSchedules(this.courseId);
+      this.schedule = null;
+    });
   }
 
   addSchedule() {

@@ -17,7 +17,8 @@
     <md-grid-list cols="2" gutterSize="1rem" rowHeight="3rem">
       <md-grid-tile style="overflow: visible">
         <md2-datepicker format="DD-MM-YYYY HH:mm" type="datetime" [(ngModel)]="schedule.start"
-                        (change)="schedule.setModifierByStartDate()" name="start" [disabled]="!editMode"></md2-datepicker>
+                        (change)="schedule.setModifierByStartDate()" name="start"
+                        [disabled]="!editMode"></md2-datepicker>
       </md-grid-tile>
       <md-grid-tile style="overflow: visible">
         <md2-select [(ngModel)]="schedule.modifier" name="modifier" [disabled]="!editMode">
@@ -26,4 +27,6 @@
       </md-grid-tile>
     </md-grid-list>
   </form>
+
 </md-card>
+<app-course-info *ngIf="schedule.course_id && (schedule.modifier!=undefined)" [courseId]="schedule.course_id" [modifierId]="schedule.modifier"></app-course-info>
