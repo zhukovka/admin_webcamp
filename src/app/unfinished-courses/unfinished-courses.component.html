@@ -1,0 +1,24 @@
+<md-card>
+  <md-card-title>
+    <md-icon md-card-avatar>report</md-icon>
+    Unfinished courses</md-card-title>
+  <md-card-content>
+    <div [style.height]="'200px'">
+      <flex-table>
+        <flex-table-header fixed>
+          <div class="flex-item">
+              Name
+          </div>
+        </flex-table-header>
+        <flex-table-body>
+            <flex-table-row *ngFor="let course of unfinished">
+            <div class="flex-item" (click)="goToCourse($event, course.id)">
+              {{course.name}}
+            </div>
+          </flex-table-row>
+        </flex-table-body>
+      </flex-table>
+    </div>
+
+  </md-card-content>
+</md-card>
