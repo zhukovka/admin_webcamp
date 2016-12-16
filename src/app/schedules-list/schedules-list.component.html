@@ -13,6 +13,9 @@
         <div>
           Edit
         </div>
+        <div>
+          Delete
+        </div>
       </flex-table-header>
       <flex-table-body>
         <flex-table-row *ngFor="let schedule of schedules">
@@ -34,6 +37,10 @@
             <md-icon *ngIf="!startDate.disabled" (click)="undoEdits()">clear</md-icon>
             <md-icon *ngIf="!startDate.disabled" class="primary"
                      (click)="confirmEdits()">check
+            </md-icon>
+          </div>
+          <div>
+            <md-icon (click)="deleteSchedule(schedule.id)">delete
             </md-icon>
           </div>
         </flex-table-row>

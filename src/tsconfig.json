@@ -15,7 +15,9 @@
       "../node_modules/@types"
     ],
     "types": [
-      "hammerjs"
+      "hammerjs",
+      "chai",
+      "mocha"
     ]
   }
 }

@@ -52,4 +52,8 @@ export class SchedulesListComponent implements OnInit {
   addSchedule() {
     this.onAddSchedule.emit(true);
   }
+
+  deleteSchedule(id:number):void{
+    this.courseService.deleteSchedule(id).then(()=>this.getSchedules(this.courseId));
+  }
 }

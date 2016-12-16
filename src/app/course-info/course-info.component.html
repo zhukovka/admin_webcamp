@@ -14,7 +14,7 @@
     <md-card-title>
       Course Info
     </md-card-title>
-    <md-grid-list cols="2" gutterSize="1rem" rowHeight="3rem">
+    <md-grid-list cols="3" gutterSize="1rem" rowHeight="3rem">
       <md-grid-tile style="overflow: visible">
         <md-input #priceInput type="number" [(ngModel)]="courseInfo.price" name="price" placeholder="price"
                   [disabled]="!editMode">
@@ -24,11 +24,24 @@
         <md-input type="number" [(ngModel)]="courseInfo.duration" name="duration" placeholder="lesson duration"
                   [disabled]="!editMode">
         </md-input>
+      </md-grid-tile>
+      <md-grid-tile>
         <md-slide-toggle [(ngModel)]="courseInfo.include" name="include" [disabled]="!editMode">
           include
         </md-slide-toggle>
       </md-grid-tile>
+    </md-grid-list>
+    <md-grid-list cols="2" gutterSize="1rem" rowHeight="30rem">
       <md-grid-tile>
+        <md-list>
+          <md-list-item *ngFor="let day of weekdays">
+            <md-checkbox [checked]="inWeekDays(day)"
+                         (change)="changeWeekDay($event, day)"
+                         [disabled]="!editMode">
+              {{day}}
+            </md-checkbox>
+          </md-list-item>
+        </md-list>
       </md-grid-tile>
     </md-grid-list>
   </form>
