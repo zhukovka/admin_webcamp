@@ -1,4 +1,8 @@
 <md-card class="mb-20">
+  <md-card-title>
+    <md-icon md-card-avatar>schedule</md-icon>
+    Course schedules
+  </md-card-title>
   <div [style.height]="'300px'">
     <flex-table>
       <flex-table-header fixed>
@@ -22,11 +26,13 @@
 
           <div [style.flex]="2">
             <md2-datepicker #startDate format="DD-MM-YYYY HH:mm" type="datetime" [(ngModel)]="schedule.start"
-                            (change)="schedule.setModifierByStartDate()" name="start" [disabled]="!inEditMode(schedule)"></md2-datepicker>
+                            (change)="schedule.setModifierByStartDate()" name="start"
+                            [disabled]="!inEditMode(schedule)"></md2-datepicker>
           </div>
           <div [style.flex]="2">
             <md2-select [(ngModel)]="schedule.modifier" name="modifier" [disabled]="startDate.disabled">
-              <md2-option *ngFor="let modifier of modifiers" [value]="modifier">{{modifiersNames[modifier]}}</md2-option>
+              <md2-option *ngFor="let modifier of modifiers" [value]="modifier">{{modifiersNames[modifier]}}
+              </md2-option>
             </md2-select>
           </div>
 

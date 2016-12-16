@@ -9,11 +9,13 @@ import {CourseInfo} from "./models/CourseInfo";
 const HOST = '//localhost/api.webcamp';
 const TRACKS_URL = `${HOST}/tracks`;
 const COURSE_SUMMARY_URL = `${HOST}/full/courses`;
+const COURSE_UNFINISHED_URL = `${HOST}/courses/unfinished`;
 const COURSE_URL = `${HOST}/courses`;
+const COURSE_UPDATE_URL = `${HOST}/update/courses`;
+const COURSE_DELETE_URL = `${HOST}/delete/courses`;
 const SCHEDULE_URL = `${HOST}/schedule`;
 const SCHEDULE_UPDATE_URL = `${HOST}/update/schedule`;
 const SCHEDULE_DELETE_URL = `${HOST}/delete/schedule`;
-const COURSE_UPDATE_URL = `${HOST}/update/courses`;
 const COURSEINFO_URL = `${HOST}/courseinfo`;
 const COURSEINFO_UPDATE_URL = `${HOST}/update/courseinfo`;
 const headers = new Headers({'Content-Type': 'application/json'});
@@ -28,6 +30,12 @@ export class CourseService {
 
   getCourse(id:number):Promise<Course> {
     return this.http.get(COURSE_URL + `/${id}`).map(r=> {
+      return Course.fromJSON(r.json());
+    }).toPromise();
+  }
+
+  createCourse() {
+    return this.http.post(COURSE_URL, null, options).map(r=> {
       return Course.fromJSON(r.json());
     }).toPromise();
   }
@@ -115,11 +123,27 @@ export class CourseService {
 
   getCourseInfoByCidMid(cid:number, mid:number):Promise<CourseInfo> {
     return this.http.get(COURSEINFO_URL + `/${cid}/${mid}`).map(r => {
-      return CourseInfo.fromJSON(r.json());
+      const json = r.json();
+      if (!json) {
+        return CourseInfo.createTemp(cid, mid);
+      } else {
+        return CourseInfo.fromJSON(json);
+      }
     }).toPromise();
   }
 
   updateCourseInfo(courseInfo:CourseInfo):Promise<boolean> {
+    console.log(courseInfo);
     return this.http.post(COURSEINFO_UPDATE_URL + `/${courseInfo.id}`, courseInfo, options).toPromise().then(r=>true);
   }
+
+  deleteCourse(id:number):Promise<boolean> {
+    return this.http.post(COURSE_DELETE_URL + `/${id}`, null, options).toPromise().then(r=>this.getCourseSummaryList(true)).then(r=>true);
+  }
+
+  getUnfinishedCourses():Promise<any[]>{
+    return this.http.get(COURSE_UNFINISHED_URL).map(r=>r.json()).toPromise();
+  }
+
+
 }

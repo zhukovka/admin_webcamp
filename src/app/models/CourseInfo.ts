@@ -34,6 +34,14 @@ export class CourseInfo {
     return courseInfo;
   }
 
+  public static createTemp(course_id:number, modifier:number){
+    let cI = new CourseInfo();
+    cI.course_id = course_id;
+    cI.modifier = modifier;
+    cI.setWeekdays();
+    return cI;
+  }
+
   getDays():number[] {
     return this.days.split(',').map(s=>+s);
   }

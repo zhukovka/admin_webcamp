@@ -21,6 +21,7 @@ export class CourseComponent implements OnInit {
     }
   };
   private newSchedule:boolean;
+
   constructor(private route:ActivatedRoute,
               private router:Router,
               private service:CourseService) {
@@ -29,7 +30,12 @@ export class CourseComponent implements OnInit {
   ngOnInit() {
     this.route.params
     // (+) converts string 'id' to a number
-      .switchMap((params:Params) => this.service.getCourse(+params['id']))
+      .switchMap((params:Params) => {
+        if (params['id'] != 'new') {
+          return this.service.getCourse(+params['id']);
+        }
+        return this.service.createCourse();
+      })
       .subscribe((course:Course) => {
         return this.course = course;
       });
@@ -69,11 +75,18 @@ export class CourseComponent implements OnInit {
     this.editMode = false;
     this.service.updateCourse(this.course).then(c=>this.course = c);
   }
-  trackByIndex(index: number, obj: any): any {
+
+  trackByIndex(index:number, obj:any):any {
     return index;
   }
 
-  onNewSchedule(add:boolean){
+  onNewSchedule(add:boolean) {
     this.newSchedule = add;
+  }
+
+  deleteCourse(id:number) {
+    this.service.deleteCourse(id).then(ok=> {
+      this.router.navigate(['/courses']);
+    });
   }
 }

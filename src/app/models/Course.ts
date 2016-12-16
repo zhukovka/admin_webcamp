@@ -34,6 +34,12 @@ export class Course {
     return course;
   }
 
+  public static createTemp(id:number):Course{
+    let c = new Course();
+    c.id = id;
+    return c;
+  }
+
   addResult() {
     this.results.push("");
   }

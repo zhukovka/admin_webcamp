@@ -21,6 +21,7 @@ import { CourseScheduleComponent } from './course-schedule/course-schedule.compo
 import { SchedulesListComponent } from './schedules-list/schedules-list.component';
 import { CourseInfoComponent } from './course-info/course-info.component';
 import 'hammerjs';
+import { UnfinishedCoursesComponent } from './unfinished-courses/unfinished-courses.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import 'hammerjs';
     CourseEditComponent,
     CourseScheduleComponent,
     SchedulesListComponent,
-    CourseInfoComponent
+    CourseInfoComponent,
+    UnfinishedCoursesComponent
   ],
   imports: [
     BrowserModule,
